@@ -1,0 +1,1355 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AELO - Sua Voz, Nossos Ciclistas</title>
+    <!-- Inclui Tailwind CSS via CDN para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carrega a fonte Inter do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos globais para a fonte Inter */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Adicionado um fundo azul claro para teste. Se você vir esta cor, o CSS está funcionando! */
+            background-color: #f0f9ff; /* Cor de fundo para teste */
+        }
+        /* Esconde todas as páginas por padrão, exceto a primeira */
+        .page-content {
+            display: none;
+        }
+        .page-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 font-sans antialiased">
+    <div id="root">
+        <!-- Header Component -->
+        <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 shadow-lg rounded-b-xl relative">
+            <div class="container mx-auto text-center">
+                <h1 class="text-4xl font-extrabold mb-2 font-inter">AELO</h1>
+                <p class="text-xl font-light font-inter flex items-center justify-center gap-2">
+                    Sua Voz, Nossos Ciclistas, Sua Mensagem!
+                    <!-- Bike Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike">
+                        <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                    </svg>
+                    <!-- Headphones Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones">
+                        <path d="M18 10a6 6 0 0 0-12 0v2a6 6 0 0 0 12 0z"/><path d="M12 19a3 3 0 0 0 3-3V8a3 3 0 0 0-6 0v8a3 3 0 0 0 3 3z"/><path d="M19 12v2a7 7 0 0 1-14 0v-2"/>
+                    </svg>
+                </p>
+            </div>
+        </header>
+
+        <!-- Navigation Component -->
+        <nav class="bg-gray-100 p-4 shadow-md rounded-xl mx-auto mt-6 max-w-5xl flex flex-wrap justify-center gap-4">
+            <button data-page="home" class="nav-button px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-blue-500 text-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                <!-- Home Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                Início
+            </button>
+            <button data-page="audioStudy" class="nav-button px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-white text-gray-800 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                <!-- Headphones Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones">
+                    <path d="M18 10a6 6 0 0 0-12 0v2a6 6 0 0 0 12 0z"/><path d="M12 19a3 3 0 0 0 3-3V8a3 3 0 0 0-6 0v8a3 3 0 0 0 3 3z"/><path d="M19 12v2a7 7 0 0 1-14 0v-2"/>
+                </svg>
+                Estudo de Áudios
+            </button>
+            <button data-page="moderation" class="nav-button px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-white text-gray-800 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                <!-- Scale Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scale">
+                    <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/>
+                </svg>
+                Moderação
+            </button>
+            <button data-page="submissionRules" class="nav-button px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-white text-gray-800 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                <!-- FileText Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text">
+                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>
+                </svg>
+                Regras de Envio
+            </button>
+            <button data-page="termsOfService" class="nav-button px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-white text-gray-800 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                <!-- ScrollText Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text">
+                    <path d="M22 12H4"/><path d="M2 12h20"/><path d="M12 2a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M12 8h-4"/><path d="M16 12h-8"/><path d="M16 16h-8"/>
+                </svg>
+                Termos de Serviço
+            </button>
+            <button data-page="refundRequest" class="nav-button px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-white text-gray-800 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                <!-- DollarSign Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign">
+                    <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                Solicitar Reembolso
+            </button>
+            <button data-page="workWithUs" class="nav-button px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-white text-gray-800 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                <!-- Bike Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike">
+                    <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                </svg>
+                Trabalhe Conosco
+            </button>
+        </nav>
+
+        <main class="p-4 md:p-8">
+            <!-- Home Page Content -->
+            <div id="home-page" class="page-content active bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto mt-8 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 font-inter flex items-center justify-center gap-2">
+                    Bem-vindo(a) à AELO!
+                    <!-- Handshake Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handshake">
+                        <path d="M11 12H3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"/><path d="M14 12h8a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2z"/><path d="M12 12V2L7 7"/>
+                    </svg>
+                </h2>
+                <p class="text-lg text-gray-600 mb-6 font-inter leading-relaxed">
+                    Na AELO, transformamos sua mensagem em movimento, veiculando seus áudios através de nossa rede de ciclistas parceiros.
+                    Nosso objetivo é garantir que sua voz alcance o público de forma eficaz e com a melhor qualidade.
+                    <!-- Headphones Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones inline-block">
+                        <path d="M18 10a6 6 0 0 0-12 0v2a6 6 0 0 0 12 0z"/><path d="M12 19a3 3 0 0 0 3-3V8a3 3 0 0 0-6 0v8a3 3 0 0 0 3 3z"/><path d="M19 12v2a7 7 0 0 1-14 0v-2"/>
+                    </svg>
+                    <!-- Bike Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike inline-block">
+                        <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                    </svg>
+                </p>
+                <p class="text-lg text-gray-600 mb-8 font-inter leading-relaxed">
+                    Explore as seções abaixo para entender como funciona nosso processo de ponta a ponta, desde a criação do seu áudio até a sua veiculação.
+                    <!-- Info Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info inline-block">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+                    </svg>
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <button data-page="audioStudy" class="nav-button bg-purple-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-md hover:bg-purple-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 flex items-center gap-2">
+                        <!-- Headphones Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones">
+                            <path d="M18 10a6 6 0 0 0-12 0v2a6 6 0 0 0 12 0z"/><path d="M12 19a3 3 0 0 0 3-3V8a3 3 0 0 0-6 0v8a3 3 0 0 0 3 3z"/><path d="M19 12v2a7 7 0 0 1-14 0v-2"/>
+                        </svg>
+                        Estudo de Áudios
+                    </button>
+                    <button data-page="moderation" class="nav-button bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-md hover:bg-green-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 flex items-center gap-2">
+                        <!-- Scale Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scale">
+                            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/>
+                        </svg>
+                        Moderação
+                    </button>
+                    <button data-page="submissionRules" class="nav-button bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-md hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 flex items-center gap-2">
+                        <!-- FileText Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text">
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>
+                        </svg>
+                        Regras de Envio
+                    </button>
+                </div>
+            </div>
+
+            <!-- Audio Study Page Content -->
+            <div id="audioStudy-page" class="page-content bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center font-inter flex items-center justify-center gap-2">
+                    Estudo de Áudios: Crie Mensagens Impactantes
+                    <!-- Headphones Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones">
+                        <path d="M18 10a6 6 0 0 0-12 0v2a6 6 0 0 0 12 0z"/><path d="M12 19a3 3 0 0 0 3-3V8a3 3 0 0 0-6 0v8a3 3 0 0 0 3 3z"/><path d="M19 12v2a7 7 0 0 1-14 0v-2"/>
+                    </svg>
+                    <!-- Lightbulb Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb">
+                        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 3c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/><path d="M10 19v-1h4v1z"/>
+                    </svg>
+                </h2>
+                <p class="text-lg text-gray-600 mb-6 font-inter leading-relaxed">
+                    Um bom áudio é a chave para uma comunicação eficaz. Siga estas dicas para garantir que sua mensagem seja clara, envolvente e memorável.
+                    <!-- Info Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info inline-block">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+                    </svg>
+                </p>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        O que faz um bom áudio?
+                        <!-- CheckCircle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle text-green-500">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                        </svg>
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter">
+                        <li><span class="font-bold">Clareza e Dicção:</span> Fale de forma clara, pausada e com boa dicção para que cada palavra seja compreendida.
+                            <!-- Mic Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic inline-block">
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Concisão:</span> Vá direto ao ponto. Mensagens curtas e objetivas são mais eficazes e fáceis de assimilar.
+                            <!-- Target Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target inline-block">
+                                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Energia e Entusiasmo:</span> Transmita a emoção desejada. Uma voz vibrante capta mais a atenção.
+                            <!-- Zap Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap inline-block">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Mensagem Única:</span> Foque em um único ponto ou chamada para ação por áudio.
+                            <!-- MessageSquare Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square inline-block">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Dicas para Gravação:
+                        <!-- Mic Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>
+                        </svg>
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter">
+                        <li><span class="font-bold">Ambiente Silencioso:</span> Grave em um local sem ruídos de fundo (tráfego, conversas, TV, etc.).
+                            <!-- VolumeX Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-x inline-block">
+                                <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Microfone Próximo:</span> Use o microfone do seu celular ou um fone de ouvido com microfone, mantendo-o a uma distância adequada da boca.
+                            <!-- Mic Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic inline-block">
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Tom de Voz Adequado:</span> Fale em um tom natural, nem muito alto, nem muito baixo.
+                            <!-- Volume2 Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2 inline-block">
+                                <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.58a15 15 0 0 1 0 20.84"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Evite Gírias Excessivas:</span> Mantenha a linguagem acessível ao público geral.
+                            <!-- Ban Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ban inline-block">
+                                <circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold text-red-700">Privacidade e Segurança:</span> <span class="font-bold">NÃO</span> inclua em seu áudio informações pessoais como endereços residenciais completos, nomes completos de indivíduos (a menos que seja uma figura pública e relevante para a mensagem), números de telefone, CPF ou outros dados sensíveis. Áudios com essas informações serão recusados para proteger a privacidade de todos.
+                            <!-- Shield Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield inline-block text-red-700">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            <!-- AlertTriangle Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle inline-block text-red-700">
+                                <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter">Exemplos:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-6 rounded-lg shadow-sm border border-green-200">
+                            <h4 class="text-xl font-bold text-green-700 mb-2 font-inter flex items-center gap-2">
+                                <!-- CheckCircle Icon SVG -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                                </svg>
+                                Bom Áudio:
+                            </h4>
+                            <p class="text-gray-700 font-inter italic">
+                                "Olá! Venha conhecer a nova loja de roupas da Rua Principal, número 123. Descontos especiais para os 50 primeiros clientes! Esperamos por você!"
+                            </p>
+                            <p class="text-sm text-gray-500 mt-2 font-inter flex items-center gap-1">
+                                (Claro, conciso, com chamada para ação e informações essenciais.)
+                                <!-- ThumbsUp Icon SVG -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up inline-block">
+                                    <path d="M7 10v12h4l1-5h2a3 3 0 0 0 3-3V8a2 2 0 0 0-2-2H9l1-4H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/><path d="M17 10h5"/>
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg shadow-sm border border-red-200">
+                            <h4 class="text-xl font-bold text-red-700 mb-2 font-inter flex items-center gap-2">
+                                <!-- XCircle Icon SVG -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle">
+                                    <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+                                </svg>
+                                Áudio Ruim:
+                            </h4>
+                            <p class="text-gray-700 font-inter italic">
+                                "Hmm... então, galera, tipo assim, tem uma loja nova, né? Lá na rua, sabe? É de roupa. Acho que tem umas promoções. É isso aí."
+                            </p>
+                            <p class="text-sm text-gray-500 mt-2 font-inter flex items-center gap-1">
+                                (Incompreensível, com ruídos de fundo, sem informações claras e com gírias excessivas.)
+                                <!-- ThumbsDown Icon SVG -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-down inline-block">
+                                    <path d="M7 14V2H3l-1 5H0a3 3 0 0 0-3 3v5a2 2 0 0 0 2 2h2l-1 4h5a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2H9l-1 4h5a2 2 0 0 0-2-2v-8a2 2 0 0 0 2-2h2"/><path d="M17 14h5"/>
+                                </svg>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Moderation Page Content -->
+            <div id="moderation-page" class="page-content bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center font-inter flex items-center justify-center gap-2">
+                    Nosso Processo de Moderação
+                    <!-- Scale Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scale">
+                        <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/>
+                    </svg>
+                    <!-- Shield Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </h2>
+                <p class="text-lg text-gray-600 mb-6 font-inter leading-relaxed">
+                    Na AELO, a moderação de áudios é um passo crucial para garantir que todas as mensagens veiculadas sejam de alta qualidade,
+                    apropriadas e em conformidade com as nossas diretrizes e a legislação vigente.
+                    <!-- Gavel Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gavel inline-block">
+                        <path d="M14.5 12.5 11 16 1.5 6.5 5 3l9.5 9.5z"/><path d="M22 11.5 15.5 5 19 1.5 22 5l-3.5 6.5z"/>
+                    </svg>
+                </p>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Por que Moderamos?
+                        <!-- HelpCircle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle">
+                            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>
+                        </svg>
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter">
+                        <li><span class="font-bold">Qualidade da Mensagem:</span> Assegurar que o áudio seja claro, audível e profissional.
+                            <!-- Award Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award inline-block">
+                                <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 22 12 17 17 22 15.79 13.89"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Experiência do Ouvinte:</span> Proporcionar uma experiência positiva para quem escuta a mensagem nas ruas.
+                            <!-- Users Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users inline-block">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13A4 4 0 0 1 22 8v2"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Conformidade e Segurança:</span> Evitar a veiculação de conteúdo ilegal, ofensivo, difamatório ou que viole direitos autorais.
+                            <!-- Shield Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield inline-block">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Reputação da Marca:</span> Proteger a imagem da AELO e de nossos clientes.
+                            <!-- Star Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star inline-block">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Critérios de Aprovação:
+                        <!-- CheckCircle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle text-green-500">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                        </svg>
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter">
+                        <li><span class="font-bold">Conteúdo Adequado:</span> Livre de linguagem ofensiva, discurso de ódio, violência, discriminação ou fake news.
+                            <!-- ThumbsUp Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up inline-block">
+                                <path d="M7 10v12h4l1-5h2a3 3 0 0 0 3-3V8a2 2 0 0 0-2-2H9l1-4H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/><path d="M17 10h5"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Clareza Sonora:</span> Áudio sem ruídos excessivos, ecos ou distorções que prejudiquem a compreensão.
+                            <!-- VolumeX Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-x inline-block">
+                                <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Duração Apropriada:</span> Dentro dos limites de tempo estabelecidos para cada tipo de campanha.
+                            <!-- Clock Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock inline-block">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Volume Consistente:</span> Nível de volume equilibrado, que não seja muito baixo ou excessivamente alto.
+                            <!-- Volume2 Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2 inline-block">
+                                <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.58a15 15 0 0 1 0 20.84"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Relevância:</span> Mensagem clara e direcionada, sem divagações.
+                            <!-- Target Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target inline-block">
+                                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        O que Evitar (e pode levar à recusa sem reembolso):
+                        <!-- XCircle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle text-red-700">
+                            <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+                        </svg>
+                        <!-- AlertTriangle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle text-red-700">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 font-inter leading-relaxed">
+                        Para garantir a aprovação do seu áudio, evite:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter mt-2">
+                        <li>Linguagem vulgar ou ofensiva.
+                            <!-- MessageSquareOff Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-off inline-block">
+                                <path d="M19 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 0 1.73-3Z"/><line x1="2" x2="22" y1="2" y2="22"/>
+                            </svg>
+                        </li>
+                        <li>Conteúdo político-partidário ou religioso proselitista.
+                            <!-- Landmark Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark inline-block">
+                                <line x1="6" x2="6" y1="18" y2="10"/><line x1="12" x2="12" y1="18" y2="10"/><line x1="18" x2="18" y1="18" y2="10"/><path d="M4 22h16"/><path d="M2 10l10-7 10 7"/>
+                            </svg>
+                        </li>
+                        <li>Informações falsas ou enganosas (fake news).
+                            <!-- FileWarning Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-warning inline-block">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                            </svg>
+                        </li>
+                        <li>Conteúdo que incite violência ou discriminação.
+                            <!-- Zap Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap inline-block">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </li>
+                        <li>Música com direitos autorais não licenciados.
+                            <!-- Music4 Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music-4 inline-block">
+                                <path d="M9 18V5l12-2v13"/><path d="M9 18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2z"/><path d="M19 18a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </li>
+                        <li>Áudios com qualidade técnica muito baixa (muito baixo, chiado, inaudível).
+                            <!-- VolumeX Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-x inline-block">
+                                <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold text-red-700">Conteúdo de Má-fé:</span> Áudios que visem difamar, atacar ou espalhar ódio contra a AELO, seus funcionários, serviços ou parceiros. Tais áudios serão recusados e a taxa de moderação será retida.
+                            <!-- Frown Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-frown inline-block text-red-700">
+                                <circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" x2="9.01" y1="10" y2="10"/><line x1="15" x2="15.01" y1="10" y2="10"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold text-red-700">Discurso de Ódio e Discriminação:</span> Áudios que contenham ataques xenofóbicos, racistas, homofóbicos, transfóbicos, machistas, misóginos, capacitistas, etaristas, ou qualquer outra forma de discriminação ou incitação à violência contra grupos ou indivíduos. <span class="font-bold">Esses áudios serão recusados imediatamente e não haverá reembolso do valor pago.</span>
+                            <!-- Ban Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ban inline-block text-red-700">
+                                <circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold text-red-700">Dados Pessoais Sensíveis:</span> Incluir em seu áudio informações como endereços residenciais completos, nomes completos de pessoas (a menos que sejam figuras públicas e relevantes para a mensagem), números de telefone, CPF, ou outros dados de identificação pessoal. Isso é para proteger a privacidade e segurança de todos.
+                            <!-- Lock Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock inline-block text-red-700">
+                                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Submission Rules Page Content -->
+            <div id="submissionRules-page" class="page-content bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center font-inter flex items-center justify-center gap-2">
+                    Regras e Processo de Envio de Áudios
+                    <!-- FileText Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text">
+                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>
+                    </svg>
+                    <!-- Upload Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>
+                    </svg>
+                </h2>
+                <p class="text-lg text-gray-600 mb-6 font-inter leading-relaxed">
+                    Para agilizar a veiculação da sua mensagem, siga o processo de envio abaixo. É simples e garante que seu áudio chegue aos nossos ciclistas o mais rápido possível!
+                    <!-- Rocket Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket inline-block">
+                        <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5s1 4 2.5 5.5 3.5 2.5 5.5 2.5 4-1 5.5-2.5 2.5-3.5 2.5-5.5-1-4-2.5-5.5z"/><path d="M12 2v10l6-6-6-6z"/>
+                    </svg>
+                </p>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Passo a Passo do Envio:
+                        <!-- ListOrdered Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-ordered">
+                            <line x1="10" x2="19" y1="6" y2="6"/><line x1="10" x2="19" y1="12" y2="12"/><line x1="10" x2="19" y1="18" y2="18"/><path d="M2 6h.01"/><path d="M2 12h.01"/><path d="M2 18h.01"/>
+                        </svg>
+                    </h3>
+                    <ol class="list-decimal list-inside text-gray-600 space-y-3 font-inter">
+                        <li><span class="font-bold">Grave seu Áudio:</span> Crie sua mensagem seguindo as dicas da seção "Estudo de Áudios", <span class="font-bold text-red-700">evitando incluir dados pessoais sensíveis</span>.
+                            <!-- Mic Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic inline-block">
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Realize o Pagamento:</span> Efetue o pagamento do serviço contratado.
+                            <!-- CreditCard Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card inline-block">
+                                <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Envie no WhatsApp Business:</span>
+                            <!-- MessageSquare Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square inline-block">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            <ul class="list-disc list-inside ml-6 text-gray-600 space-y-1 font-inter">
+                                <li>Acesse o grupo <span class="font-bold">"AELO - Clientes e Moderação"</span> no WhatsApp Business.
+                                    <!-- Users Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users inline-block">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13A4 4 0 0 1 22 8v2"/>
+                                    </svg>
+                                </li>
+                                <li>Envie o <span class="font-bold">seu áudio</span> e o <span class="font-bold">comprovante de pagamento (foto ou print)</span> na mesma mensagem ou em mensagens consecutivas para facilitar a identificação.
+                                    <!-- Image Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image inline-block">
+                                        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                    </svg>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><span class="font-bold">Aguarde a Verificação e Moderação:</span> Nossa equipe verificará o comprovante e fará a moderação do seu áudio.
+                            <!-- Clock Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock inline-block">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <!-- Scale Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scale inline-block">
+                                <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Áudio Aprovado:</span> Se aprovado, seu áudio será encaminhado para o grupo <span class="font-bold">"AELO - Áudios para Veiculação"</span>, onde nossos ciclistas o acessarão para veicular sua mensagem.
+                            <!-- CheckCircle Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle inline-block text-green-500">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                            </svg>
+                            <!-- Bike Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike inline-block">
+                                <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                            </svg>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-yellow-50 p-6 rounded-lg shadow-sm border border-yellow-200 mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Áudios Não Aprovados: Nossa Política
+                        <!-- AlertTriangle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle text-yellow-700">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        É importante que seu áudio esteja em conformidade com nossas diretrizes de moderação. Caso um áudio não seja aprovado para veiculação devido ao seu conteúdo (ex: linguagem inadequada, informações falsas, baixa qualidade irrecuperável, etc.), aplicaremos a seguinte política:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-3 font-inter">
+                        <li><span class="font-bold">Comunicação e Justificativa:</span> Nossa equipe entrará em contato com você no grupo <span class="font-bold">"AELO - Clientes e Moderação"</span> para explicar detalhadamente os motivos da não aprovação.
+                            <!-- MessageSquare Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square inline-block">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Retenção de Valor da Moderação:</span> Informamos que o valor referente ao serviço de moderação (<span class="font-bold">R$ 6,00</span>) será <span class="font-bold">retido</span> para cobrir os custos operacionais e de tempo da nossa equipe dedicados à análise, escuta e tentativa de ajuste do áudio. Isso inclui despesas com internet, moderadores, tempo de serviço, análise de áudios e uso de programas de moderação. Este é um serviço já prestado, independentemente da veiculação final. <span class="font-bold text-red-700">Esta retenção será aplicada especialmente em casos de áudios enviados com má-fé, que visem difamar, atacar ou espalhar ódio contra a AELO, seus funcionários, serviços ou parceiros, ou que contenham discurso de ódio (xenofobia, racismo, etc.) ou dados pessoais sensíveis, garantindo que o tempo e os recursos da empresa sejam compensados.</span>
+                            <!-- DollarSign Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign inline-block text-red-700">
+                                <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                            <!-- Lock Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock inline-block text-red-700">
+                                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Solicitação de Reembolso (Serviço de Veiculação):</span> No entanto, você tem a opção de solicitar o reembolso do valor pago especificamente pelo serviço de veiculação (que não foi realizado), <span class="font-bold">exceto nos casos de áudios que contenham discurso de ódio (xenofobia, racismo, homofobia, etc.) ou dados pessoais sensíveis, para os quais não haverá reembolso.</span> Para solicitar o reembolso nos casos elegíveis, basta responder à nossa comunicação de não aprovação com a frase <span class="font-bold italic">"SOLICITAR REEMBOLSO"</span> ou utilizar o botão de "Solicitar Reembolso" no nosso site.
+                            <!-- RefreshCcw Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw inline-block">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Prazo de Reembolso:</span> O reembolso será processado em até <span class="font-bold">5 (cinco) dias úteis</span> a partir da data da sua solicitação.
+                            <!-- Calendar Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar inline-block">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>
+                            </svg>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500 mt-6 font-inter leading-relaxed">
+                        Esta política está detalhada em nossos <a href="#" onclick="navigateTo('termsOfService')" class="text-blue-600 hover:underline font-semibold">Termos de Serviço</a>. Recomendamos a leitura completa para evitar quaisquer dúvidas.
+                        <!-- ScrollText Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text inline-block">
+                            <path d="M22 12H4"/><path d="M2 12h20"/><path d="M12 2a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M12 8h-4"/><path d="M16 12h-8"/><path d="M16 16h-8"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <p class="text-lg text-gray-600 font-inter leading-relaxed flex items-center justify-center gap-2">
+                    Nosso objetivo é sempre ajudar você a ter sua mensagem veiculada com sucesso! Em caso de dúvidas, nossa equipe está à disposição no grupo de clientes.
+                    <!-- Handshake Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handshake">
+                        <path d="M11 12H3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"/><path d="M14 12h8a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2z"/><path d="M12 12V2L7 7"/>
+                    </svg>
+                </p>
+            </div>
+
+            <!-- Terms of Service Page Content -->
+            <div id="termsOfService-page" class="page-content bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center font-inter flex items-center justify-center gap-2">
+                    Termos de Serviço da AELO
+                    <!-- ScrollText Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text">
+                        <path d="M22 12H4"/><path d="M2 12h20"/><path d="M12 2a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M12 8h-4"/><path d="M16 12h-8"/><path d="M16 16h-8"/>
+                    </svg>
+                </h2>
+                <p class="text-lg text-gray-600 mb-6 font-inter leading-relaxed">
+                    Bem-vindo(a) à AELO! Ao utilizar nossos serviços, você concorda em cumprir e estar vinculado(a) aos seguintes termos e condições de uso. Por favor, leia-os atentamente.
+                    <!-- BookOpen Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open inline-block">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                </p>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        1. Aceitação dos Termos
+                        <!-- CheckCircle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle text-green-500">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        Ao acessar ou utilizar qualquer parte dos serviços da AELO, você concorda com estes Termos de Serviço. Se você não concordar com todos os termos e condições deste acordo, você não poderá acessar o site ou usar quaisquer serviços.
+                        <!-- XCircle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle inline-block text-red-500">
+                            <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        2. Descrição do Serviço
+                        <!-- Info Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+                        </svg>
+                    </h3>
+                    <p class="text-lg text-gray-600 mb-4 font-inter leading-relaxed">
+                        A AELO oferece um serviço de veiculação de mensagens de áudio através de uma rede de ciclistas parceiros. Nossos serviços incluem a moderação de áudios, veiculação e relatórios de desempenho, conforme o plano contratado.
+                        <!-- Headphones Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones inline-block">
+                            <path d="M18 10a6 6 0 0 0-12 0v2a6 6 0 0 0 12 0z"/><path d="M12 19a3 3 0 0 0 3-3V8a3 3 0 0 0-6 0v8a3 3 0 0 0 3 3z"/><path d="M19 12v2a7 7 0 0 1-14 0v-2"/>
+                        </svg>
+                        <!-- Bike Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike inline-block">
+                            <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                        </svg>
+                        <!-- BarChart2 Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 inline-block">
+                            <line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        3. Conteúdo do Usuário e Proibições
+                        <!-- Ban Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ban text-red-700">
+                            <circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/>
+                        </svg>
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter">
+                        <li><span class="font-bold">Responsabilidade:</span> Você é o(a) único(a) responsável pelo conteúdo dos áudios que envia para veiculação.
+                            <!-- User Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user inline-block">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Direitos Autorais:</span> Você garante que possui todos os direitos, licenças e permissões necessárias para o conteúdo que envia, e que o uso desse conteúdo pela AELO não violará direitos de terceiros.
+                            <!-- Copyright Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copyright inline-block">
+                                <circle cx="12" cy="12" r="10"/><path d="M14.5 9a3.5 3.5 0 0 0 0 7h1a2 2 0 0 0 0-4h-1V9.5a2.5 2.5 0 0 0 5 0V10"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Proibição de Conteúdo:</span> É estritamente proibido o envio de áudios que contenham:
+                            <ul class="list-disc list-inside ml-6 text-gray-600 space-y-1 font-inter">
+                                <li>Linguagem ofensiva, difamatória, caluniosa, obscena ou vulgar.
+                                    <!-- MessageSquareOff Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-off inline-block">
+                                        <path d="M19 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 0 1.73-3Z"/><line x1="2" x2="22" y1="2" y2="22"/>
+                                    </svg>
+                                </li>
+                                <li>Conteúdo que promova ódio, discriminação, violência ou atividades ilegais.
+                                    <!-- Zap Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap inline-block">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                    </svg>
+                                </li>
+                                <li>Informações falsas, enganosas ou "fake news".
+                                    <!-- FileWarning Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-warning inline-block">
+                                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                                    </svg>
+                                </li>
+                                <li>Conteúdo político-partidário ou religioso proselitista.
+                                    <!-- Landmark Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark inline-block">
+                                        <line x1="6" x2="6" y1="18" y2="10"/><line x1="12" x2="12" y1="18" y2="10"/><line x1="18" x2="18" y1="18" y2="10"/><path d="M4 22h16"/><path d="M2 10l10-7 10 7"/>
+                                    </svg>
+                                </li>
+                                <li>Material protegido por direitos autorais, marcas registradas ou outros direitos de propriedade intelectual sem a devida autorização.
+                                    <!-- Music4 Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music-4 inline-block">
+                                        <path d="M9 18V5l12-2v13"/><path d="M9 18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2z"/><path d="M19 18a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2z"/>
+                                    </svg>
+                                    <!-- Shield Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield inline-block">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    </svg>
+                                </li>
+                                <li><span class="font-bold">Conteúdo de Má-fé:</span> Áudios que visem difamar, atacar ou espalhar ódio contra a AELO, seus funcionários, serviços ou parceiros.
+                                    <!-- Frown Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-frown inline-block text-red-700">
+                                        <circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" x2="9.01" y1="10" y2="10"/><line x1="15" x2="15.01" y1="10" y2="10"/>
+                                    </svg>
+                                </li>
+                                <li><span class="font-bold text-red-700">Discurso de Ódio e Discriminação:</span> Áudios que contenham ataques xenofóbicos, racistas, homofóbicos, transfóbicos, machistas, misóginos, capacitistas, etaristas, ou qualquer outra forma de discriminação ou incitação à violência contra grupos ou indivíduos.
+                                    <!-- Ban Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ban inline-block text-red-700">
+                                        <circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/>
+                                    </svg>
+                                </li>
+                                <li><span class="font-bold text-red-700">Dados Pessoais Sensíveis:</span> Incluir em seu áudio informações como endereços residenciais completos, nomes completos de pessoas (a menos que sejam figuras públicas e relevantes para a mensagem), números de telefone, CPF, ou outros dados de identificação pessoal.
+                                    <!-- Lock Icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock inline-block text-red-700">
+                                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        4. Moderação de Áudios e Retenção de Valor
+                        <!-- Scale Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scale">
+                            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/>
+                        </svg>
+                        <!-- DollarSign Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign">
+                            <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        Todos os áudios enviados passarão por um processo de moderação, conforme detalhado na seção "Moderação" do nosso site. A AELO reserva-se o direito de recusar a veiculação de qualquer áudio que não esteja em conformidade com nossas diretrizes, sem aviso prévio.
+                        <!-- AlertTriangle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle inline-block">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                        </svg>
+                    </p>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        Em caso de áudio recusado, o valor referente ao serviço de moderação (<span class="font-bold">R$ 6,00</span>) será <span class="font-bold">retido</span> para cobrir os custos operacionais e de tempo da nossa equipe dedicados à análise, escuta e tentativa de ajuste do áudio. Esta retenção será aplicada especialmente em casos de áudios enviados com má-fé, que visem difamar, atacar ou espalhar ódio contra a AELO, seus funcionários, serviços ou parceiros, ou que contenham discurso de ódio (xenofobia, racismo, etc.) ou dados pessoais sensíveis, garantindo que o tempo e os recursos da empresa sejam compensados. <span class="font-bold text-red-700">Para áudios recusados por conterem discurso de ódio ou dados pessoais sensíveis, não haverá reembolso de qualquer valor.</span>
+                        <!-- Wallet Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet inline-block text-red-700">
+                            <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h12a2 2 0 0 1 0 4H5a2 2 0 0 0 0 4h12a2 2 0 0 0 2-2v-3"/><path d="M10 12h6"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        5. Pagamento e Reembolso
+                        <!-- CreditCard Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">
+                            <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+                        </svg>
+                        <!-- RefreshCcw Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        Os detalhes sobre pagamentos e a política de reembolso para áudios não aprovados (com a retenção da taxa de moderação e as exceções para discurso de ódio/dados pessoais) estão descritos na seção "Regras de Envio" do nosso site.
+                        <!-- ScrollText Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text inline-block">
+                            <path d="M22 12H4"/><path d="M2 12h20"/><path d="M12 2a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M12 8h-4"/><path d="M16 12h-8"/><path d="M16 16h-8"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        6. Responsabilidade da AELO e Segurança dos Dados
+                        <!-- Shield Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        <!-- Lock Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        A AELO compromete-se a garantir a segurança e a integridade das suas mensagens de áudio durante todo o processo de veiculação. Implementamos medidas de segurança para proteger seus dados e garantir que seu áudio chegue aos nossos ciclistas de forma segura e confidencial.
+                        <!-- ShieldCheck Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check inline-block">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+                        </svg>
+                    </p>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        Nossa prioridade é a privacidade. Os endereços de veiculação fornecidos pelos clientes são tratados com o mais alto nível de sigilo e não são compartilhados publicamente. Os ciclistas recebem apenas as informações necessárias para a execução do serviço, sem acesso a dados sensíveis que possam comprometer a segurança ou privacidade do cliente ou de terceiros.
+                        <!-- EyeOff Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off inline-block">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" x2="23" y1="1" y2="23"/>
+                        </svg>
+                    </p>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        É responsabilidade do cliente <span class="font-bold text-red-700">NÃO</span> incluir dados pessoais sensíveis (como endereços residenciais completos, nomes completos, CPFs, telefones) no conteúdo dos áudios. A AELO não se responsabiliza por quaisquer consequências decorrentes da inclusão indevida de tais informações pelo cliente no áudio.
+                        <!-- AlertTriangle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle inline-block text-red-700">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        7. Limitação de Responsabilidade
+                        <!-- TrendingDown Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-down">
+                            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        A AELO não será responsável por quaisquer danos diretos, indiretos, incidentais, especiais, consequenciais ou exemplares, incluindo, mas não se limitando a, danos por perda de lucros, boa vontade, uso, dados ou outras perdas intangíveis, resultantes do uso ou da incapacidade de usar o serviço.
+                        <!-- TrendingDown Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-down inline-block">
+                            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        8. Alterações nos Termos de Serviço
+                        <!-- RefreshCcw Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        A AELO reserva-se o direito de, a seu exclusivo critério, atualizar, alterar ou substituir qualquer parte destes Termos de Serviço a qualquer momento. É sua responsabilidade verificar esta página periodicamente para quaisquer alterações. O uso continuado ou acesso ao site após a publicação de quaisquer alterações constitui aceitação dessas alterações.
+                        <!-- CalendarCheck2 Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check-2 inline-block">
+                            <path d="M21 14V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m15 19 2 2 4-4"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        9. Lei Aplicável e Jurisdição
+                        <!-- Gavel Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gavel">
+                            <path d="M14.5 12.5 11 16 1.5 6.5 5 3l9.5 9.5z"/><path d="M22 11.5 15.5 5 19 1.5 22 5l-3.5 6.5z"/>
+                        </svg>
+                        <!-- Globe Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+                        </svg>
+                    </h3>
+                    <p class="text-gray-600 mb-4 font-inter leading-relaxed">
+                        Estes Termos de Serviço serão regidos e interpretados de acordo com as leis do Brasil. Você concorda que qualquer disputa decorrente ou relacionada a estes Termos de Serviço será submetida à jurisdição exclusiva dos tribunais localizados em Dois Córregos, Estado de São Paulo, Brasil.
+                        <!-- MapPin Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin inline-block">
+                            <path d="M12 12.07A2 2 0 1 0 12 8a2 2 0 0 0 0 4.07z"/><path d="M12 22s8-4 8-10c0-7-8-10-8-10S4 5 4 12c0 6 8 10 8 10z"/>
+                        </svg>
+                    </p>
+                </div>
+
+                <p class="text-lg text-gray-600 font-inter leading-relaxed flex items-center justify-center gap-2">
+                    Para quaisquer dúvidas sobre estes Termos de Serviço, entre em contato conosco através dos canais disponíveis no nosso site.
+                    <!-- Phone Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.1-8.63A2 2 0 0 1 4.11 2H7.08a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-1.13 2.64L7 12l1.76 1.76a2 2 0 0 0 2.63 1.13 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    <!-- Mail Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
+                        <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                </p>
+            </div>
+
+            <!-- Refund Request Page Content -->
+            <div id="refundRequest-page" class="page-content bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center font-inter flex items-center justify-center gap-2">
+                    Solicitar Reembolso
+                    <!-- DollarSign Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign">
+                        <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </h2>
+                <p class="text-lg text-gray-600 mb-6 font-inter leading-relaxed">
+                    Preencha o formulário abaixo para preparar sua solicitação de reembolso. Ao clicar em "Enviar Solicitação", você será redirecionado(a) para o WhatsApp da AELO com os dados preenchidos.
+                    <!-- MessageSquare Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square inline-block">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </p>
+
+                <form id="refund-form" class="space-y-6">
+                    <div>
+                        <label for="fullName" class="block text-gray-700 text-sm font-bold mb-2 font-inter">
+                            Nome Completo:
+                            <!-- User Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user inline-block">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="Seu nome completo"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="cpf" class="block text-gray-700 text-sm font-bold mb-2 font-inter">
+                            CPF:
+                            <!-- CreditCard Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card inline-block">
+                                <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                        </label>
+                        <input
+                            type="text"
+                            id="cpf"
+                            name="cpf"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="Ex: 123.456.789-00"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="address" class="block text-gray-700 text-sm font-bold mb-2 font-inter">
+                            Endereço Completo:
+                            <!-- MapPin Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin inline-block">
+                                <path d="M12 12.07A2 2 0 1 0 12 8a2 2 0 0 0 0 4.07z"/><path d="M12 22s8-4 8-10c0-7-8-10-8-10S4 5 4 12c0 6 8 10 8 10z"/>
+                            </svg>
+                        </label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="Rua, Número, Bairro, Cidade, Estado, CEP"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-gray-700 text-sm font-bold mb-2 font-inter">
+                            Telefone:
+                            <!-- Phone Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone inline-block">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.1-8.63A2 2 0 0 1 4.11 2H7.08a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-1.13 2.64L7 12l1.76 1.76a2 2 0 0 0 2.63 1.13 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="Ex: (XX) XXXXX-XXXX"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2 font-inter">
+                            E-mail:
+                            <!-- Mail Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail inline-block">
+                                <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                            </svg>
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="seuemail@exemplo.com"
+                            required
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        id="submit-refund-request"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full w-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                        <!-- MessageSquare Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        Enviar Solicitação via WhatsApp
+                    </button>
+                </form>
+
+                <div id="refund-message" class="mt-6 p-4 rounded-lg bg-blue-100 text-blue-800 font-inter text-center flex items-center justify-center gap-2" style="display: none;">
+                    <!-- Placeholder for message icon -->
+                    <span id="refund-message-icon"></span>
+                    <span id="refund-message-text"></span>
+                </div>
+            </div>
+
+            <!-- Work With Us Page Content -->
+            <div id="workWithUs-page" class="page-content bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center font-inter flex items-center justify-center gap-2">
+                    Trabalhe Conosco: Seja um Ciclista AELO!
+                    <!-- Bike Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike">
+                        <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                    </svg>
+                    <!-- Briefcase Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase">
+                        <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                </h2>
+                <p class="text-lg text-gray-600 mb-6 font-inter leading-relaxed">
+                    Você ama pedalar e quer transformar seu tempo livre em renda? Junte-se à rede de ciclistas parceiros da AELO e faça parte de uma iniciativa inovadora que leva mensagens às ruas da sua cidade!
+                    <!-- Globe Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe inline-block">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+                    </svg>
+                </p>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Por que trabalhar com a AELO?
+                        <!-- Award Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award">
+                            <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 22 12 17 17 22 15.79 13.89"/>
+                        </svg>
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter">
+                        <li><span class="font-bold">Renda Flexível:</span> Ganhe dinheiro pedalando nos seus próprios horários. Você define sua disponibilidade.
+                            <!-- DollarSign Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign inline-block">
+                                <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                            <!-- Clock Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock inline-block">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Contrato PJ:</span> Trabalhe como Pessoa Jurídica (PJ), com a flexibilidade e autonomia que você precisa.
+                            <!-- Building Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building inline-block">
+                                <rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9.5 16h5"/><path d="M9.5 12h5"/><path d="M9.5 8h5"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Faça Seus Horários:</span> Não há chefes ou horários fixos. Escolha quando e quanto você quer trabalhar.
+                            <!-- Calendar Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar inline-block">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Impacto Local:</span> Ajude empresas e comunidades a divulgarem suas mensagens de forma criativa e sustentável.
+                            <!-- MapPin Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin inline-block">
+                                <path d="M12 12.07A2 2 0 1 0 12 8a2 2 0 0 0 0 4.07z"/><path d="M12 22s8-4 8-10c0-7-8-10-8-10S4 5 4 12c0 6 8 10 8 10z"/>
+                            </svg>
+                            <!-- Leaf Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf inline-block">
+                                <path d="M11 20A7 7 0 0 1 9.86 9.86C10 8 9 1 7 2 5 3 3 8.3 3 10a6 6 0 0 0 12 0c0-2.3-3-6-4-8Z"/><path d="M2 21c0-3 1.5-9 1-10 1 0 4 2 8 13"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Saúde e Bem-Estar:</span> Mantenha-se ativo(a) e saudável enquanto trabalha.
+                            <!-- Heart Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart inline-block">
+                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.31 1.5 4.06 3 5.5L12 22z"/>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Como Funciona?
+                        <!-- Settings Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.78 1.28a2 2 0 0 0 .73 2.73l.15.08a2 2 0 0 1 1 1.74v.18a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.78-1.28a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </h3>
+                    <ol class="list-decimal list-inside text-gray-600 space-y-3 font-inter">
+                        <li><span class="font-bold">Cadastro:</span> Faça seu cadastro em nossa plataforma e envie seus documentos.
+                            <!-- ClipboardCopy Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-copy inline-block">
+                                <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M10 10l4 4m0-4-4 4"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Treinamento:</span> Participe de um breve treinamento online sobre as diretrizes da AELO e o uso do equipamento.
+                            <!-- GraduationCap Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap inline-block">
+                                <path d="M21.43 12.57L12 2 2.57 12.57A2 2 0 0 0 2 14v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6a2 2 0 0 0-.57-1.43z"/><path d="M16 16.5V10"/><path d="M8 16.5V10"/><path d="M12 12v4.5"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Equipamento:</span> Receba ou adquira o equipamento necessário para a veiculação dos áudios (ex: caixa de som portátil, suporte para bicicleta).
+                            <!-- Package Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package inline-block">
+                                <path d="m7.5 4.27-.5.25C6.18 5.16 5 6.13 5 7.5v5c0 1.47 1.18 2.44 2 2.87l.5.25"/><path d="m16.5 4.27.5.25c.82.43 2 1.4 2 2.87v5c0 1.47-1.18 2.44-2 2.87l-.5.25"/><path d="M12 17.5V22"/><path d="M12 17.5c-1.47 0-2.44-1.18-2.87-2L9 15c-.82-.43-2-1.4-2-2.87V7.5c0-1.47 1.18-2.44 2-2.87L9 4.5c.82-.43 2-1.4 2-2.87V0"/><path d="M12 17.5c1.47 0 2.44-1.18 2.87-2L15 15c.82-.43 2-1.4 2-2.87V7.5c0-1.47-1.18-2.44-2-2.87L15 4.5c.82-.43 2-1.4-2-2.87V0"/>
+                            </svg>
+                            <!-- Volume2 Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2 inline-block">
+                                <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.58a15 15 0 0 1 0 20.84"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Escolha Suas Rotas:</span> Acesse o aplicativo AELO para ciclistas e escolha as campanhas de áudio disponíveis em sua região.
+                            <!-- Map Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map inline-block">
+                                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21 3 6"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/>
+                            </svg>
+                        </li>
+                        <li><span class="font-bold">Pedale e Ganhe:</span> Veicule os áudios enquanto pedala pelas rotas definidas. Receba por cada veiculação concluída!
+                            <!-- Bike Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike inline-block">
+                                <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                            </svg>
+                            <!-- Wallet Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet inline-block">
+                                <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h12a2 2 0 0 1 0 4H5a2 2 0 0 0 0 4h12a2 2 0 0 0 2-2v-3"/><path d="M10 12h6"/>
+                            </svg>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg shadow-sm border border-blue-200">
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3 font-inter flex items-center gap-2">
+                        Requisitos Básicos:
+                        <!-- CheckCircle Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle text-blue-500">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                        </svg>
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 font-inter">
+                        <li>Ter mais de 18 anos.
+                            <!-- User Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user inline-block">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </li>
+                        <li>Possuir bicicleta em bom estado.
+                            <!-- Bike Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike inline-block">
+                                <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                            </svg>
+                        </li>
+                        <li>Ter um smartphone com acesso à internet.
+                            <!-- Smartphone Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone inline-block">
+                                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>
+                            </svg>
+                        </li>
+                        <li>Ser MEI (Microempreendedor Individual) ou ter disponibilidade para se formalizar como PJ.
+                            <!-- Briefcase Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase inline-block">
+                                <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                        </li>
+                        <li>Comprometimento com a qualidade do serviço e respeito às diretrizes da AELO.
+                            <!-- Handshake Icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handshake inline-block">
+                                <path d="M11 12H3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"/><path d="M14 12h8a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2z"/><path d="M12 12V2L7 7"/>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+
+                <p class="text-lg text-gray-600 mt-8 font-inter leading-relaxed text-center flex items-center justify-center gap-2">
+                    Interessado(a)? <span class="font-bold">Entre em contato conosco</span> para saber mais e começar a pedalar com a AELO!
+                    <!-- Phone Icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.1-8.63A2 2 0 0 1 4.11 2H7.08a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-1.13 2.64L7 12l1.76 1.76a2 2 0 0 0 2.63 1.13 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </p>
+                <div class="text-center mt-4">
+                    <button
+                        id="work-with-us-button"
+                        class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 flex items-center justify-center gap-2"
+                    >
+                        <!-- MessageSquare Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        Quero ser um Ciclista AELO!
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-gray-800 text-white text-center p-6 mt-12 rounded-t-xl">
+            <p class="font-inter flex items-center justify-center gap-2">
+                &copy; <span id="current-year"></span> AELO. Todos os direitos reservados.
+                <!-- Bike Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bike">
+                    <circle cx="18" cy="17" r="3"/><circle cx="6" cy="17" r="3"/><path d="M12 17H7l-2-6h4l2 6h4"/><path d="M10 10V6h4"/>
+                </svg>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const pages = document.querySelectorAll('.page-content');
+            const refundForm = document.getElementById('refund-form');
+            const refundMessageDiv = document.getElementById('refund-message');
+            const refundMessageIcon = document.getElementById('refund-message-icon');
+            const refundMessageText = document.getElementById('refund-message-text');
+            const workWithUsButton = document.getElementById('work-with-us-button');
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Function to navigate between pages
+            function navigateTo(pageId) {
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(`${pageId}-page`).classList.add('active');
+
+                // Update active state for navigation buttons
+                navButtons.forEach(button => {
+                    if (button.dataset.page === pageId) {
+                        button.classList.add('bg-blue-500', 'text-white', 'shadow-md');
+                        button.classList.remove('bg-white', 'text-gray-800', 'hover:bg-blue-100');
+                    } else {
+                        button.classList.remove('bg-blue-500', 'text-white', 'shadow-md');
+                        button.classList.add('bg-white', 'text-gray-800', 'hover:bg-blue-100');
+                    }
+                });
+            }
+
+            // Add event listeners to navigation buttons
+            navButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const page = event.currentTarget.dataset.page;
+                    navigateTo(page);
+                });
+            });
+
+            // Handle Refund Form Submission
+            if (refundForm) {
+                refundForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const formData = {
+                        fullName: document.getElementById('fullName').value,
+                        cpf: document.getElementById('cpf').value,
+                        address: document.getElementById('address').value,
+                        phone: document.getElementById('phone').value,
+                        email: document.getElementById('email').value,
+                    };
+
+                    // Basic validation
+                    if (!formData.fullName || !formData.cpf || !formData.address || !formData.phone || !formData.email) {
+                        refundMessageIcon.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle">
+                                <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                            </svg>
+                        `;
+                        refundMessageText.textContent = 'Por favor, preencha todos os campos. ⚠️';
+                        refundMessageDiv.style.display = 'flex';
+                        return;
+                    }
+
+                    // Format message for WhatsApp
+                    const whatsappMessage = `
+Olá, AELO! Gostaria de solicitar um reembolso com os seguintes dados:
+
+*Nome Completo:* ${formData.fullName}
+*CPF:* ${formData.cpf}
+*Endereço:* ${formData.address}
+*Telefone:* ${formData.phone}
+*E-mail:* ${formData.email}
+
+Por favor, aguardo as próximas instruções.
+                    `.trim();
+
+                    const encodedMessage = encodeURIComponent(whatsappMessage);
+                    const whatsappUrl = `https://api.whatsapp.com/send?phone=5514981150675&text=${encodedMessage}`;
+
+                    try {
+                        window.open(whatsappUrl, '_blank');
+                        refundMessageIcon.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                            </svg>
+                        `;
+                        refundMessageText.textContent = 'Sua solicitação está pronta para ser enviada via WhatsApp! Por favor, confirme o envio na nova aba. ✅';
+                        refundMessageDiv.style.display = 'flex';
+                        refundForm.reset(); // Clear form after submission
+                    } catch (error) {
+                        console.error("Error opening WhatsApp:", error);
+                        refundMessageIcon.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle">
+                                <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+                            </svg>
+                        `;
+                        refundMessageText.textContent = 'Erro ao abrir o WhatsApp. Por favor, tente novamente ou entre em contato diretamente. ❌';
+                        refundMessageDiv.style.display = 'flex';
+                    }
+                });
+            }
+
+            // Handle Work With Us button click
+            if (workWithUsButton) {
+                workWithUsButton.addEventListener('click', () => {
+                    const whatsappMessage = `Olá, AELO! Tenho interesse em me tornar um ciclista parceiro. Poderiam me dar mais informações sobre como funciona?`;
+                    const encodedMessage = encodeURIComponent(whatsappMessage);
+                    const whatsappUrl = `https://api.whatsapp.com/send?phone=5514981150675&text=${encodedMessage}`;
+                    window.open(whatsappUrl, '_blank');
+                });
+            }
+
+            // Initialize to show the home page
+            navigateTo('home');
+        });
+    </script>
+</body>
+</html>
